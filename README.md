@@ -2,8 +2,8 @@
 `Tracing 统一翻译为链路追踪`
 
 可以从这本书中查看一些示例 [Mastering Distributed Tracing](https://www.shkuro.com/books/2019-mastering-distributed-tracing/):
-* [第4章: OpenTracing 仪表基础](https://github.com/PacktPublishing/Mastering-Distributed-Tracing/tree/master/Chapter04)
-* [第5章: 异步程序的仪表](https://github.com/PacktPublishing/Mastering-Distributed-Tracing/tree/master/Chapter05)
+* [第4章: OpenTracing 基础](https://github.com/PacktPublishing/Mastering-Distributed-Tracing/tree/master/Chapter04)
+* [第5章: 异步程序的追踪](https://github.com/PacktPublishing/Mastering-Distributed-Tracing/tree/master/Chapter05)
 * [第7章: 服务网格的链路追踪](https://github.com/PacktPublishing/Mastering-Distributed-Tracing/tree/master/Chapter07)
 * [第11章: 集成指标和日志](https://github.com/PacktPublishing/Mastering-Distributed-Tracing/tree/master/Chapter11)
 * [第12章: 通过数据挖掘收集关键信息](https://github.com/PacktPublishing/Mastering-Distributed-Tracing/tree/master/Chapter12)
@@ -60,8 +60,6 @@ make install
 * [第四节 - Baggage(用于传输跨进程的全局数据)](./lesson04)
   * Understand distributed context propagation
   * Use baggage to pass data through the call graph
-* [其他](./extracredit)
-  * 使用开源仪表程序
 
 
 
