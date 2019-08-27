@@ -21,7 +21,7 @@
 记录有时间，就可以进行运行时长问题的研究了。但，RequestID 规范很弱，随着服务和机器的增多，可操作行越来越差。  
 
 其实，这个问题利用 OpenTracing 就可以解决，详细解决方案后面介绍。
-### 总结
+### 小结
 微服务架构多应用，多实例化后需要面临的一些问题：
 - 我是谁?
 - 我从哪里来?
@@ -127,7 +127,8 @@ SpanContexts可以通过Injected操作向Carrier增加，或者通过Extracted�
 关于 span 的粒度问题,官方早有建议([Focus on Areas of Value](https://opentracing.io/docs/best-practices/instrumenting-your-application/)),
 总的来说,就是由粗到细.trace具有严格的规范性，如果在链路的某一层丢失了span上下文，那么链路追踪就会断开，一次调用就会产生多个trace，这可以很直观的在UI中体现,这是什么，这就是bug，这就必须得改。  
 
-### How?
+## How?
+### hello world
 
 #### basic hello-world project   
 
