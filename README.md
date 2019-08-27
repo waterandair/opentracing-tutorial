@@ -43,23 +43,26 @@ make install
 
 本教程的其他命令都相对于此目录运行
 
-## Lessons
+## 目录
 
 * [第一节 - Hello World](./lesson01)
   * 实例化一个 Tracer
-  * Create a simple trace
-  * Annotate the trace
+  * 创建一个简单的例子
+  * 对 Trace 进行注释
 * [第二节 - 上下文和追踪函数](./lesson02)
-  * Trace individual functions
-  * Combine multiple spans into a single trace
-  * Propagate the in-process context
+  * 追踪独立函数
+  * 在一个 trace 中联合多个 span
+  * 在一个进程内传递上下文
 * [第三节 - 追踪 RPC 请求](./lesson03)
-  * Trace a transaction across more than one microservice
-  * Pass the context between processes using `Inject` and `Extract`
-  * Apply OpenTracing-recommended tags
+  * 在多个微服务中进行 trace 追踪
+  * 使用 `Inject` 和 `Extrace` 在进程间传递上下文
+  * 使用 `OpenTracing` 推荐的 tags
 * [第四节 - Baggage(用于传输跨进程的全局数据)](./lesson04)
-  * Understand distributed context propagation
-  * Use baggage to pass data through the call graph
+  * 离家分布式上下文传输
+  * 使用 baggage 在整个周期中传输数据
+  
+### 代码说明
+随着文章一步步走的代码在 `./lesson0x/exercise` 目录下,封装好的最终代码在 `./lesson0x/solution` 中
 
 
 

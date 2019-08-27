@@ -141,9 +141,6 @@ span.LogFields(
 
 ### 运行一把
 
-As before, first run the `formatter` and `publisher` apps in separate terminals.
-Then run the `client/hello.go`. You should see the outputs like this:
-
 ```
 # client
 $ go run lesson03/exercise/advance/client/hello.go Kobe

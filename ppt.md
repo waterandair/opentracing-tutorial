@@ -22,18 +22,25 @@
 
 其实，这个问题利用 OpenTracing 就可以解决，详细解决方案后面介绍。
 ### 总结
-系统微服务化后多应用，多实例需要面临的一些问题：
+微服务架构多应用，多实例化后需要面临的一些问题：
+- 我是谁?
+- 我从哪里来?
+- 我要到那里去?
+
+openTracing 可以回答一个程序的哲学三问,基于此就可以很清晰的解决下面三个难题:  
+
 - 错误原因快速定位
 - 用户体验优化(响应时长)
 - 架构(调用链路)优化
 
-
 ## What?
+
+理念源于google 的 [dapper](https://ai.google/research/pubs/pub36356) 论文.
 
 - 平台无关
 - 厂商无关
 - 方便的添加（或更换）追踪系统的实现
-- openTracing 组织提供了大量的辅助类库(https://github.com/opentracing https://github.com/opentracing-contrib https://opentracing.io/registry/?s=go)
+- openTracing 组织提供了大量的辅助类库(https://github.com/opentracing https://github.com/opentracing-contrib https://opentracing.io/registry/?s=go)  
 
 ### openTracing API
 
@@ -49,10 +56,10 @@ todo： 这里需要画图说明
 
 ##### 流程图 or 时序图？
 流程图：
-![一次调用](https://wu-sheng.gitbooks.io/opentracing-io/content/images/OTOV_1.png)  
+![一次调用](https://opentracing.io/img/OTOV_1.png)  
 
 时序图：
-![Trace过程](https://wu-sheng.gitbooks.io/opentracing-io/content/images/OTOV_3.png)  
+![Trace过程](https://opentracing.io/img/OTOV_3.png)  
 
 总结： 
 - 流程图易于看组件间的调用关系，但不方便看调用时间，有局限性
@@ -60,49 +67,79 @@ todo： 这里需要画图说明
 - Trace 一般使用时序图展示。
 
 #### Spans
-一个 `span` 代表一个逻辑运行单元。
+一个 `span` 代表一个逻辑运行单元。OpenTracing推荐在RPC的客户端和服务端，至少各有一个span,用于记录RPC调用的客户端和服务端信息。 
 ##### span 三要素
 
 - 操作名称 （`get` or `get_user/999` or `get_user`)
 - 开始时间
-- 结束时间
+- 结束时间  
 
-##### span relationships 
+##### span relationships
+![](https://opentracing.io/img/OTHT_1.png) 
 ###### ChildOf 
-父 span 需要 子 span 的返回值
+父子关系的几个特征：  
+- 嵌套关系
+- 父 span 的运行时间，取决于子 span 的运行时间
+- 父 span 可以有多个并行运行的子 span
 
-###### FollowsFrom 
-
-父 span 
-
+###### FollowsFrom  
+Follow关系的几个特征（A -> B）：
+- 顺序排列关系
+- A、B span 只能串行运行，B span 必须在A span 执行完后执行
+- B 独立与 A，比如在异步进程中运行
+- B 运行时间与 A 运行时间无关，与 A 的父 span 的运行时间无关。
+ 
 #### Logs
-
+包含时间戳的日志，`OpenTracing` 规范建议所有的日志声明都包含`event`字段，用于描述记录整个事件，事件提供的其他属性可以作为额外的字段记录。
 
 #### Tags
+key-value 键值对,记录关于 span 的信息.  
 
+通用语义约定: https://opentracing.io/specification/conventions/
 
 ### SpanContext
+- span 的上下文,跨越整个 tracing 周期, 主要用于在 RPC 请求中传递Span  
+- 携带 trace_id, span_id, sample 等信息.  
+- 可以用 Baggage 在整个 trace 中携带信息.
+
+#### Baggage
+- Baggage 是存储在 SpanContext 上的键值对,可以在一个 trace 中的所有 span 中传递
+- 要非常克制的在 Baggage 中存数据.
+
+可以同于传递顶层调用者的身份信息,或是一些一直存在请求参数中的信息,比如 wuid, meid.
+
+#### Baggage vs. Span Tags
+- Baggage 在一个trace 周期存储
+- Tags 只在一个 span 周期存储 
+
+#### Carrier
+跨进程数据携带者.  
+- text map（基于字符串的map）
+- binary（二进制)
 
 #### Inject and Extract
 
-#### Baggage
+SpanContexts可以通过Injected操作向Carrier增加，或者通过Extracted从Carrier中获取，跨进程通讯数据,实现全链路追踪.
 
-#### Baggage vs. Span Tags
-
-
+#### Self talk
+一开始接触这个东西，我觉得制定 log 规范都很难让每个人遵守，跟何况是 trace 呢，trace不仅要考虑代码段要不要记录成一个span，
+还要考虑要记录的细致程度,如果在一个trace中使用baggage传递信息，那更是需要我们去和符合上下游的同学进行联调才行。但是转念一想，这都不是事儿.
+关于 span 的粒度问题,官方早有建议([Focus on Areas of Value](https://opentracing.io/docs/best-practices/instrumenting-your-application/)),
+总的来说,就是由粗到细.trace具有严格的规范性，如果在链路的某一层丢失了span上下文，那么链路追踪就会断开，一次调用就会产生多个trace，这可以很直观的在UI中体现,这是什么，这就是bug，这就必须得改。  
 
 ### How?
 
-### OpenTracing In Action
+#### basic hello-world project   
 
-#### basic hello-world project 
+https://github.com/waterandair/opentracing-tutorial/tree/master/lesson01/exercise
 
 #### nicely hello-world project
 
-#### distributed hello-world project
+https://github.com/waterandair/opentracing-tutorial/tree/master/lesson02/exercise
 
-- OpenTracing推荐在RPC的客户端和服务端，至少各有一个span,用于记录RPC调用的客户端和服务端信息。 
-
+#### multi micro-service hello-world project  
+https://github.com/waterandair/opentracing-tutorial/tree/master/lesson03/exercise  
+https://github.com/waterandair/opentracing-tutorial/tree/master/lesson04/exercise  
 ### OpenTracing In MicroPay
 
 #### dependencies DAG

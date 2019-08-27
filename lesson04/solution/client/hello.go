@@ -22,6 +22,7 @@ func main() {
 	defer closer.Close()
 	opentracing.SetGlobalTracer(tracer)
 
+
 	helloTo := os.Args[1]
 	greeting := os.Args[2]
 
