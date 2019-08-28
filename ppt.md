@@ -49,7 +49,6 @@ openTracing 可以回答一个程序的哲学三问,基于此就可以很清晰�
 Dependencies Directed Acyclic Graph  
 
 ```
-todo： 这里需要画图说明
 大家可能听过有人听过一个名词：分布式链路追踪，但如果咬文嚼字的话，其实“链(link)”这个字并不贴切，链的形状是 A->B->C，显然我们的写的代码并不都是这样的，
 有的时候是树状的，但其实它是一个图状的，标准的说，是一个有向无环图。
 ```
@@ -143,8 +142,6 @@ https://github.com/waterandair/opentracing-tutorial/tree/master/lesson03/exercis
 https://github.com/waterandair/opentracing-tutorial/tree/master/lesson04/exercise  
 ### OpenTracing In MicroPay
 
-#### dependencies DAG
+#### code
 
-#### show code
-
-#### show trace in Jaeger/Zipkin
+#### trace in Jaeger/Zipkin
