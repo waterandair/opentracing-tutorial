@@ -17,7 +17,7 @@ func main() {
 		panic("ERROR: Expecting one argument")
 	}
 
-	tracer, closer := initJaeger("hello-world")
+	tracer, closer := initJaeger("lesson02")
 	defer closer.Close()
 	opentracing.SetGlobalTracer(tracer)
 	rootSpan := tracer.StartSpan("say-hello")
