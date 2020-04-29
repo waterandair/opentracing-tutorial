@@ -2,15 +2,15 @@ package main
 
 import (
 	"context"
-	"github.com/opentracing/opentracing-go/ext"
 	"net/http"
 	"net/url"
 	"os"
 
 	"github.com/opentracing/opentracing-go"
+	"github.com/opentracing/opentracing-go/ext"
 	"github.com/opentracing/opentracing-go/log"
-	"github.com/yurishkuro/opentracing-tutorial/go/lib/http"
-	"github.com/yurishkuro/opentracing-tutorial/go/lib/tracing"
+	"github.com/waterandair/opentracing-tutorial/lib/http"
+	"github.com/waterandair/opentracing-tutorial/lib/tracing"
 )
 
 func main() {
